@@ -8,7 +8,7 @@ export default function Input(props) {
     function onChange(event) {
         const { target } = event;
 
-        setGiftDetails(prev => ({...prev, [key]: parseInt(target.value)}));
+        setGiftDetails(prev => ({...prev, [key]: parseInt(target.value) || 0}));
     };
 
     return (
