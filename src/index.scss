@@ -1,0 +1,18 @@
+@import "~normalize.css/normalize.css";
+
+@import "./styles/variables.scss";
+@import "./styles/reset.scss";
+
+@import "./styles/typography.scss";
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: #fbfbfc;
+  color: #2f2936;
+  font-family: Rubik,Avenir Next,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
