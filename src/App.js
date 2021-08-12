@@ -69,7 +69,24 @@ export default function App() {
         />
       </div>
       <div className="card--computed-values">
-
+        <div className="computed--reserved-events">
+          <div className="computed-group">
+            <span>Total Reserved Errors</span>
+            <span>{/* reserved errors go here */}</span>
+          </div>
+          <div className="computed-group">
+            <span>Total Reserved Transactions</span>
+            <span>{/* reserved transactions go here */}</span>
+          </div>
+        </div>
+        <div className="computed--on-demand computed-group"> 
+          <span>Total On-Demand Spend</span>
+          <span>{/*on-demand spend goes here*/}</span>
+        </div>
+        <div className="computed--gift-value computed group">
+          <span>Gift Value</span>
+          <span>{/*gift value goes here*/}</span>
+        </div>
       </div>
     </div>
   );
