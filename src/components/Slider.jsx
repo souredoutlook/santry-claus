@@ -1,3 +1,6 @@
+import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
+
+
 import '../App.css';
 
 export default function Slider(props) {
@@ -8,7 +11,12 @@ export default function Slider(props) {
     function onChange(event) {
         const { target } = event;
 
-        setGiftDetails(prev => ({...prev, [key]: list[target.value]}));
+        setGiftDetails(prev => ({
+            ...prev,
+            [key]: list[target.value],
+            onDemand: computeOnDemand({...prev, [key]: list[target.value]}),
+            giftValue: computeGiftValue({...prev, [key]: list[target.value]}),
+        }));
     };
 
     return (

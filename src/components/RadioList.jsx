@@ -1,3 +1,6 @@
+import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
+
+
 import '../App.css';
 
 export default function RadioList(props) {
@@ -8,7 +11,12 @@ export default function RadioList(props) {
     function onChange(event) {
         const { target } = event;
 
-        setGiftDetails(prev => ({...prev, [key]: target.value}));
+        setGiftDetails(prev => ({
+            ...prev,
+            [key]: target.value,
+            onDemand: computeOnDemand({...prev, [key]: target.value}),
+            giftValue: computeGiftValue({...prev, [key]: target.value}),
+        }));
     };
 
     const radioList = list.map(v => {

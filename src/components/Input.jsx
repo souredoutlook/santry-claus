@@ -1,5 +1,5 @@
 import '../App.css';
-
+import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
 export default function Input(props) {
 
     const { type, giftDetails, setGiftDetails } = props;
@@ -8,7 +8,12 @@ export default function Input(props) {
     function onChange(event) {
         const { target } = event;
 
-        setGiftDetails(prev => ({...prev, [key]: parseInt(target.value)}));
+        setGiftDetails(prev => ({
+            ...prev,
+            [key]: parseInt(target.value) || 0,
+            onDemand: computeOnDemand({...prev, [key]: parseInt(target.value) || 0}),
+            giftValue: computeGiftValue({...prev, [key]: parseInt(target.value) || 0}),
+        }));
     };
 
     return (
