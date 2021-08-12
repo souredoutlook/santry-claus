@@ -2,24 +2,23 @@ import '../App.css';
 
 export default function Input(props) {
 
-    const { type, orgDetails, setOrgDetails } = props;
+    const { type, giftDetails, setGiftDetails } = props;
+    const { title, key } = type;
 
     function onChange(event) {
         const { target } = event;
 
-        const changedValue = target.name === "Accepted Errors" ? {acceptedErrors: parseInt(target.value)} : {acceptedTransactions: parseInt(target.value)};
-
-        setOrgDetails(prev => ({...prev, ...changedValue}));
+        setGiftDetails(prev => ({...prev, [key]: parseInt(target.value)}));
     };
 
     return (
         <div className="input-group">
-            <label for={type}>{type}</label>
+            <label for={key}>{title}</label>
             <input
-                placeholder={type}
-                name={type}
+                placeholder={title}
+                name={key}
                 onChange={onChange}
-                value={type === "Accepted Errors" ? parseInt(orgDetails.acceptedErrors) || 0 : parseInt(orgDetails.acceptedTransactions) || 0}
+                value={parseInt(giftDetails[key]) || 0}
             />
         </div>
     );
