@@ -1,0 +1,29 @@
+$heading-font-family: "Nunito Sans", sans-serif;
+$body-font-family: "Montserrat", sans-serif;
+
+// $active-opacity: 1;
+// $inactive-opacity: 0.15;
+
+$white: #fff;
+$white-trans: #ffffff70;
+$black: #000;
+$black-light: #00000080;
+
+$background-color-dark: #6C5FC7;
+$background-color-light: #FFFFFF;
+$text-color-light: #2B1D38;
+$text-color-dark: #FFFFFF;
+$border-dark: 1px #c6becf solid;
+$border-light: 1px #c6becf solid;
+
+$spacing: 2rem;
+$spacing-half: 1rem;
+$spacing-slight: 0.5em;
+
+$card-width: 45rem;
+$card-height: calc(3.35em + 300px);
+$card-border-radius: 8px;
+
+$light-gray-background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), #C2C9D1;
+
+$box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.12);
