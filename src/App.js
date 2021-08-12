@@ -72,11 +72,11 @@ export default function App() {
         <div className="computed--reserved-events">
           <div className="computed-group">
             <span>Total Reserved Errors</span>
-            <span>{/* reserved errors go here */}</span>
+            <span>{(giftDetails.reservedErrors * 1000) + giftDetails.giftedErrors}</span>
           </div>
           <div className="computed-group">
             <span>Total Reserved Transactions</span>
-            <span>{/* reserved transactions go here */}</span>
+            <span>{(giftDetails.reservedTransactions * 1000) + giftDetails.giftedTransactions}</span>
           </div>
         </div>
         <div className="computed--on-demand computed-group"> 
