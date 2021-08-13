@@ -1,8 +1,5 @@
 import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
 
-
-import '../App.css';
-
 export default function Slider(props) {
 
     const { type, giftDetails, setGiftDetails } = props;
@@ -21,12 +18,16 @@ export default function Slider(props) {
 
     return (
         <div className="slider-group">
-            <label for={title} className="slider-label">{title}</label>
-            <input type="range" name={title} min={0} max={list.length - 1} step={1} onChange={onChange} value={list.indexOf(giftDetails[key])}/>
-            <label for={title} className="slider-value">{parseInt(giftDetails[key]) * 1000}</label>
-            <div className="slider-key"> 
-                <span>{list[0]}</span>
-                <span>{list[list.length-1]}</span>
+            <div className="slider-label">
+                <label for={title} className="slider-label">{title}</label>
+                <label for={title} className="slider-value">{parseInt(giftDetails[key]) * 1000}</label>
+            </div>
+            <div className="slider-component">
+                <input type="range" name={title} min={0} max={list.length - 1} step={1} onChange={onChange} value={list.indexOf(giftDetails[key])}/>
+                <div className="slider-key"> 
+                    <span>{`${list[0]}K`}</span>
+                    <span>{`${list[list.length-1].toString()[0]}M`}</span>
+                </div>
             </div>
         </div>
     );

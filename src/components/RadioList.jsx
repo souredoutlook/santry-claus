@@ -1,8 +1,5 @@
 import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
 
-
-import '../App.css';
-
 export default function RadioList(props) {
 
     const { type, giftDetails, setGiftDetails} = props;

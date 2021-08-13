@@ -1,5 +1,5 @@
-import '../App.css';
 import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
+
 export default function Input(props) {
 
     const { type, giftDetails, setGiftDetails } = props;
