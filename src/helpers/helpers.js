@@ -18,7 +18,7 @@ export const computeOnDemand = function(giftDetails) {
                 onDemand.error += ((maxQuota - minQuota) * 1000) * (plan === "Business" ? businessCost : teamCost);
             } else if (computedReservedErrors > (minQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors <= (maxQuota * 1000))) {
                 onDemand.error += (acceptedErrors - computedReservedErrors) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedErrors >= (minQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors > (maxQuota * 1000))) {
+            } else if (computedReservedErrors >= (minQuota * 1000) && computedReservedErrors < (maxQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors > (maxQuota * 1000))) {
                 onDemand.error += ((maxQuota * 1000) - computedReservedErrors) * (plan === "Business" ? businessCost : teamCost);
             } else if (computedReservedErrors <= (minQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors <= (maxQuota * 1000))) {
                 onDemand.error += (acceptedErrors - (minQuota * 1000)) * (plan === "Business" ? businessCost : teamCost);
@@ -40,7 +40,7 @@ export const computeOnDemand = function(giftDetails) {
             } else if (computedReservedTransactions > (minQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions <= (maxQuota * 1000))) {
                 console.log("inside condition 2")
                 onDemand.transaction += (acceptedTransactions - computedReservedTransactions) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedTransactions > (minQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions > (maxQuota * 1000))) {
+            } else if (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions < (maxQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions > (maxQuota * 1000))) {
                 console.log("inside condition 2.5")
                 onDemand.transaction += ((maxQuota * 1000) - computedReservedTransactions) * (plan === "Business" ? businessCost : teamCost);
             } else if (computedReservedTransactions <= (minQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions <= (maxQuota * 1000))) {
