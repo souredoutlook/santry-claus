@@ -6,9 +6,19 @@ import Input from "./components/Input";
 
 import { RESERVED_EVENTS, PLAN_OPTIONS } from "./constants/ORG_DETAILS";
 import { EVENT_CONSTANTS } from "./constants/EVENT_CONSTANTS";
-import './App.css';
+import './App.scss';
 
 export default function App() {
+
+  // Create our number formatter.
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+
+    // These options are needed to round to whole numbers if that's what you want.
+    minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    maximumFractionDigits: 2, // (causes 2500.99 to be printed as $2,501)
+  });
 
   const [giftDetails, setGiftDetails] = useState({
     plan: "Team",
@@ -23,24 +33,26 @@ export default function App() {
     giftValue: 0,
   });
 
-  // useEffect(()=>{
-  //   setGiftDetails(prev => ({...prev, }));
-  // },[giftDetails])
-
   return (
     <div className="App">
-      <h1>Santry Claus</h1>
+      <header>
+        <h1>Santry Claus</h1>
+        <img className="santry-hat" src="santry-claus.svg"/>
+      </header>
       <div className="card--org-details">
+        <h4 className="group-label">Plan:</h4>
         <RadioList
           type={PLAN_OPTIONS.plan}
           giftDetails={giftDetails}
           setGiftDetails={setGiftDetails}
         />
+        <h4 className="group-label">Contract Term:</h4>
         <RadioList 
           type={PLAN_OPTIONS.cycle}
           giftDetails={giftDetails}
           setGiftDetails={setGiftDetails}
         />
+        <h4 className="group-label">Errors:</h4>
         <Slider 
           type={RESERVED_EVENTS.errors}
           giftDetails={giftDetails}
@@ -51,6 +63,7 @@ export default function App() {
           giftDetails={giftDetails}
           setGiftDetails={setGiftDetails}
         />
+        <h4 className="group-label">Transactions:</h4>
         <Slider 
           type={RESERVED_EVENTS.transactions}
           giftDetails={giftDetails}
@@ -63,6 +76,7 @@ export default function App() {
         />
       </div>
       <div className="card--gifted-events">
+        <h4 className="group-label">Gifted-Events:</h4>
         <Input 
           type={EVENT_CONSTANTS.giftedErrors}
           giftDetails={giftDetails}
@@ -75,6 +89,7 @@ export default function App() {
         />
       </div>
       <div className="card--computed-values">
+        <h4 className="group-label">Gift Details:</h4>
         <div className="computed--reserved-events">
           <div className="computed-group">
             <span>Total Reserved Errors</span>
@@ -89,9 +104,9 @@ export default function App() {
           <span>Total On-Demand Spend</span>
           <span>{giftDetails.onDemand}</span>
         </div>
-        <div className="computed--gift-value computed group">
+        <div className="computed--gift-value computed-group">
           <span>Gift Value</span>
-          <span>{giftDetails.giftValue}</span>
+          <span>{formatter.format(giftDetails.giftValue.toFixed(2))}</span>
         </div>
       </div>
     </div>
