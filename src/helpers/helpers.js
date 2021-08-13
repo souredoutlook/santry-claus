@@ -69,6 +69,8 @@ export const computeGiftValue = function(giftDetails) {
             giftValue.error += ((maxQuota - minQuota) * 1000) * (plan === "Business" ? businessCost : teamCost);
         } else if ((reservedErrors * 1000) > (minQuota * 1000) && (computedReservedErrors > (minQuota * 1000) && computedReservedErrors <= (maxQuota * 1000))) {
             giftValue.error += (computedReservedErrors - (reservedErrors * 1000)) * (plan === "Business" ? businessCost : teamCost);
+        } else if ((reservedErrors * 1000) > (minQuota * 1000) && (reservedErrors * 1000) <= (maxQuota * 1000) && (computedReservedErrors > (minQuota * 1000) && computedReservedErrors > (maxQuota * 1000))) {
+            giftValue.error += ((maxQuota * 1000) - (reservedErrors * 1000)) * (plan === "Business" ? businessCost : teamCost);
         } else if ((reservedErrors * 1000) <= (minQuota * 1000) && (computedReservedErrors > (minQuota * 1000) && acceptedErrors <= (maxQuota * 1000))) {
             giftValue.error += (computedReservedErrors - (minQuota * 1000)) * (plan === "Business" ? businessCost : teamCost);
         }
@@ -83,6 +85,8 @@ export const computeGiftValue = function(giftDetails) {
         } else if ((reservedTransactions * 1000) > (minQuota * 1000) && (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions <= (maxQuota * 1000))) {
             console.log("inside condition 2")
             giftValue.transaction += (computedReservedTransactions - (reservedTransactions * 1000)) * (plan === "Business" ? businessCost : teamCost);
+        } else if ((reservedTransactions * 1000) > (minQuota * 1000) && (reservedTransactions * 1000) <= (maxQuota * 1000) && (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions > (maxQuota * 1000))) {
+            giftValue.transaction += ((maxQuota * 1000) - (reservedTransactions * 1000)) * (plan === "Business" ? businessCost : teamCost);
         } else if ((reservedTransactions * 1000) <= (minQuota * 1000) && (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions <= (maxQuota * 1000))) {
             console.log("inside condition 3")
             giftValue.transaction += (computedReservedTransactions - (minQuota * 1000)) * (plan === "Business" ? businessCost : teamCost);
