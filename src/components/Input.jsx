@@ -2,17 +2,19 @@ import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
 
 export default function Input(props) {
 
-    const { type, giftDetails, setGiftDetails } = props;
+    const { type, giftDetails, setGiftDetails, eventFormatter } = props;
     const { title, key } = type;
 
     function onChange(event) {
         const { target } = event;
 
+        const value = parseInt(target.value.replace(/,/g, ''));
+
         setGiftDetails(prev => ({
             ...prev,
-            [key]: parseInt(target.value) || 0,
-            onDemand: computeOnDemand({...prev, [key]: parseInt(target.value) || 0}),
-            giftValue: computeGiftValue({...prev, [key]: parseInt(target.value) || 0}),
+            [key]: value || 0,
+            onDemand: computeOnDemand({...prev, [key]: value || 0}),
+            giftValue: computeGiftValue({...prev, [key]: value || 0}),
         }));
     };
 
@@ -23,7 +25,7 @@ export default function Input(props) {
                 placeholder={title}
                 name={key}
                 onChange={onChange}
-                value={parseInt(giftDetails[key]) || 0}
+                value={eventFormatter.format(parseInt(giftDetails[key]) || 0)}
             />
         </div>
     );

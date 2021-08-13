@@ -2,7 +2,7 @@ import { computeOnDemand, computeGiftValue } from "../helpers/helpers"
 
 export default function Slider(props) {
 
-    const { type, giftDetails, setGiftDetails } = props;
+    const { type, giftDetails, setGiftDetails, eventFormatter } = props;
     const { title, list, key } = type;
 
     function onChange(event) {
@@ -20,7 +20,7 @@ export default function Slider(props) {
         <div className="slider-group">
             <div className="slider-label">
                 <label for={title} className="slider-label">{title}</label>
-                <label for={title} className="slider-value">{parseInt(giftDetails[key]) * 1000}</label>
+                <label for={title} className="slider-value">{eventFormatter.format(parseInt(giftDetails[key]) * 1000)}</label>
             </div>
             <div className="slider-component">
                 <input type="range" name={title} min={0} max={list.length - 1} step={1} onChange={onChange} value={list.indexOf(giftDetails[key])}/>
