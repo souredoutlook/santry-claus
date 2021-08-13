@@ -26,7 +26,7 @@ export default function Slider(props) {
                 <input type="range" name={title} min={0} max={list.length - 1} step={1} onChange={onChange} value={list.indexOf(giftDetails[key])}/>
                 <div className="slider-key"> 
                     <span>{`${list[0]}K`}</span>
-                    <span>{`${list[list.length-1].toString()[0]}M`}</span>
+                    <span>{`${list[list.length-1].toString().substring(0,2)}M`}</span>
                 </div>
             </div>
         </div>
