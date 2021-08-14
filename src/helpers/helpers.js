@@ -1,97 +1,63 @@
 import { transactionQuotas, transactionOnDemand, errorQuotas, errorOnDemand } from "../constants/PLANS";
 
+const calcBucket = function(min, max, evaluand, reserved, planCost) {
+
+    console.log("inside calcOnDemandBucket")
+    const start = max <= reserved ? max : min < reserved ? reserved : min; //ex. max = 100,000 min = 50,000 reserved = 75,000 start is 75,000
+    const end = max <= evaluand ? max : min < evaluand ? evaluand : min; //ex. max = 100,00 min = 50,000 accepted/reserved + gift = 1,100,000 end is 100,000
+    console.log(`start: ${start}, end: ${end}, planCost: ${planCost}`)
+
+    if (start < end) {
+      return  (end - start) * planCost;
+    } 
+
+    return 0;
+}
+
 export const computeOnDemand = function(giftDetails) {
     const { reservedErrors, acceptedErrors, giftedErrors, reservedTransactions, acceptedTransactions, giftedTransactions, plan } = giftDetails;
 
-    const computedReservedErrors = (reservedErrors * 1000) + giftedErrors;
-    const computedReservedTransactions = (reservedTransactions * 1000) + giftedTransactions;
     const onDemand = {transaction: 0, error: 0}
 
-    if (computedReservedErrors < acceptedErrors) {
-        console.log("inside condition")
-        for (const bucket of errorOnDemand) {
-            console.log("bucket: ", bucket)
-            const { minQuota, maxQuota, businessCost, teamCost } = bucket;
-            console.log(computedReservedErrors, acceptedErrors)
+    for (const bucket of errorOnDemand) {
+        const { minQuota, maxQuota, businessCost, teamCost } = bucket;
 
-            if (computedReservedErrors <= (minQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors > (maxQuota * 1000))) {
-                onDemand.error += ((maxQuota - minQuota) * 1000) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedErrors > (minQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors <= (maxQuota * 1000))) {
-                onDemand.error += (acceptedErrors - computedReservedErrors) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedErrors >= (minQuota * 1000) && computedReservedErrors < (maxQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors > (maxQuota * 1000))) {
-                onDemand.error += ((maxQuota * 1000) - computedReservedErrors) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedErrors <= (minQuota * 1000) && (acceptedErrors > (minQuota * 1000) && acceptedErrors <= (maxQuota * 1000))) {
-                onDemand.error += (acceptedErrors - (minQuota * 1000)) * (plan === "Business" ? businessCost : teamCost);
-            }
-            console.log(onDemand.error)
-        };
-    };
+        onDemand.error += calcBucket(minQuota * 1000, maxQuota * 1000, acceptedErrors - giftedErrors, reservedErrors * 1000, plan === "Business" ? businessCost : teamCost);
 
-    if (computedReservedTransactions < acceptedTransactions) {
-        console.log("inside condition")
-        for (const bucket of transactionOnDemand) {
-            console.log("bucket: ", bucket)
-            const { minQuota, maxQuota, businessCost, teamCost } = bucket;
-            console.log(computedReservedTransactions, acceptedTransactions)
-    
-            if (computedReservedTransactions <= (minQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions > (maxQuota * 1000))) {
-                console.log("inside condition 1")
-                onDemand.transaction += ((maxQuota - minQuota) * 1000) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedTransactions > (minQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions <= (maxQuota * 1000))) {
-                console.log("inside condition 2")
-                onDemand.transaction += (acceptedTransactions - computedReservedTransactions) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions < (maxQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions > (maxQuota * 1000))) {
-                console.log("inside condition 2.5")
-                onDemand.transaction += ((maxQuota * 1000) - computedReservedTransactions) * (plan === "Business" ? businessCost : teamCost);
-            } else if (computedReservedTransactions <= (minQuota * 1000) && (acceptedTransactions > (minQuota * 1000) && acceptedTransactions <= (maxQuota * 1000))) {
-                console.log("inside condition 3")
-                onDemand.transaction += (acceptedTransactions - (minQuota * 1000)) * (plan === "Business" ? businessCost : teamCost);
-            }
-            console.log(onDemand.transaction)
-        };
-    };
+        console.log(onDemand.error)
+    }
 
+    for (const bucket of transactionOnDemand) {
+        const { minQuota, maxQuota, businessCost, teamCost } = bucket;
+
+        onDemand.transaction += calcBucket(minQuota * 1000, maxQuota * 1000, acceptedTransactions - giftedTransactions, reservedTransactions * 1000, plan === "Business" ? businessCost : teamCost);
+
+        console.log(onDemand.transaction)
+    }
 
     return onDemand.transaction + onDemand.error;
 };
 
 export const computeGiftValue = function(giftDetails) {
-    const { reservedErrors, acceptedErrors, giftedErrors, reservedTransactions, acceptedTransactions, giftedTransactions, plan } = giftDetails;
+    const { reservedErrors, giftedErrors, reservedTransactions, giftedTransactions, plan } = giftDetails;
 
-    const computedReservedErrors = (reservedErrors * 1000) + giftedErrors;
-    const computedReservedTransactions = (reservedTransactions * 1000) + giftedTransactions;
     const giftValue = {transaction: 0, error: 0}
 
     for (const bucket of errorQuotas) {
         const { minQuota, maxQuota, businessCost, teamCost } = bucket;
 
-        if ((reservedErrors * 1000) <= (minQuota * 1000) && (computedReservedErrors > (minQuota * 1000) && computedReservedErrors > (maxQuota * 1000))) {
-            giftValue.error += ((maxQuota - minQuota) * 1000) * (plan === "Business" ? businessCost : teamCost);
-        } else if ((reservedErrors * 1000) > (minQuota * 1000) && (computedReservedErrors > (minQuota * 1000) && computedReservedErrors <= (maxQuota * 1000))) {
-            giftValue.error += (computedReservedErrors - (reservedErrors * 1000)) * (plan === "Business" ? businessCost : teamCost);
-        } else if ((reservedErrors * 1000) > (minQuota * 1000) && (reservedErrors * 1000) <= (maxQuota * 1000) && (computedReservedErrors > (minQuota * 1000) && computedReservedErrors > (maxQuota * 1000))) {
-            giftValue.error += ((maxQuota * 1000) - (reservedErrors * 1000)) * (plan === "Business" ? businessCost : teamCost);
-        } else if ((reservedErrors * 1000) <= (minQuota * 1000) && (computedReservedErrors > (minQuota * 1000) && acceptedErrors <= (maxQuota * 1000))) {
-            giftValue.error += (computedReservedErrors - (minQuota * 1000)) * (plan === "Business" ? businessCost : teamCost);
-        }
-    };
-    
+        giftValue.error += calcBucket(minQuota * 1000, maxQuota * 1000, (reservedErrors * 1000) + giftedErrors, reservedErrors * 1000, plan === "Business" ? businessCost : teamCost);
+
+        console.log(giftValue.error)
+    }
+
     for (const bucket of transactionQuotas) {
         const { minQuota, maxQuota, businessCost, teamCost } = bucket;
 
-        if ((reservedTransactions * 1000) <= (minQuota * 1000) && (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions > (maxQuota * 1000))) {
-            console.log("inside condition 1")
-            giftValue.transaction += ((maxQuota - minQuota) * 1000) * (plan === "Business" ? businessCost : teamCost);
-        } else if ((reservedTransactions * 1000) > (minQuota * 1000) && (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions <= (maxQuota * 1000))) {
-            console.log("inside condition 2")
-            giftValue.transaction += (computedReservedTransactions - (reservedTransactions * 1000)) * (plan === "Business" ? businessCost : teamCost);
-        } else if ((reservedTransactions * 1000) > (minQuota * 1000) && (reservedTransactions * 1000) <= (maxQuota * 1000) && (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions > (maxQuota * 1000))) {
-            giftValue.transaction += ((maxQuota * 1000) - (reservedTransactions * 1000)) * (plan === "Business" ? businessCost : teamCost);
-        } else if ((reservedTransactions * 1000) <= (minQuota * 1000) && (computedReservedTransactions > (minQuota * 1000) && computedReservedTransactions <= (maxQuota * 1000))) {
-            console.log("inside condition 3")
-            giftValue.transaction += (computedReservedTransactions - (minQuota * 1000)) * (plan === "Business" ? businessCost : teamCost);
-        }
-    };
+        giftValue.transaction += calcBucket(minQuota * 1000, maxQuota * 1000, (reservedTransactions * 1000) + giftedTransactions, reservedTransactions * 1000, plan === "Business" ? businessCost : teamCost);
+
+        console.log(giftValue.transaction)
+    }
 
     return giftValue.transaction + giftValue.error;
 };
