@@ -4,6 +4,8 @@ Santry Claus is a mini-hack by @souredoutlook and @mbauer404 for @getsentry Hack
 
 Santry Claus is a bespoke calculator for deriving the value of gifts to Team and Business accounts and evaluating their effect on On-Demand spend. 
 
+![santry-claus ui](assets/santry-claus.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
