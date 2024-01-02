@@ -7,6 +7,14 @@ const EVENT_CONSTANTS = {
         title: "Accepted Transactions",
         key: "acceptedTransactions",
     },
+    acceptedReplays: {
+        title: "Accepted Replays",
+        key: "acceptedReplays",
+    },
+    acceptedAttachments: {
+        title: "Accepted Attachments",
+        key: "acceptedAttachments",
+    },
     giftedErrors: {
         title: "Gifted Errors",
         key: "giftedErrors",
@@ -14,6 +22,14 @@ const EVENT_CONSTANTS = {
     giftedTransactions: {
         title: "Gifted Transactions",
         key: "giftedTransactions"
+    },
+   giftedReplays: {
+        title: "Gifted Replays",
+        key: "giftedReplays",
+    },
+    giftedAttachments: {
+        title: "Gifted Attachments",
+        key: "giftedAttachments",
     },
 };
 

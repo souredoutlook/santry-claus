@@ -29,8 +29,11 @@ export default function App() {
     acceptedErrors: 0,
     reservedTransactions: 100,
     acceptedTransactions: 0,
+    reservedReplays: 0.5,
+    acceptedReplays: 0,
     giftedErrors: 0,
     giftedTransactions: 0,
+    giftedReplays: 0,
     onDemand: 0,
     giftValue: 0,
   });
@@ -80,6 +83,19 @@ export default function App() {
           setGiftDetails={setGiftDetails}
           eventFormatter={eventFormatter}
         />
+        <h4 className="group-label">Replays:</h4>
+          <Slider 
+            type={RESERVED_EVENTS.replays}
+            giftDetails={giftDetails}
+            setGiftDetails={setGiftDetails}
+            eventFormatter={eventFormatter}
+          />
+          <Input 
+            type={EVENT_CONSTANTS.acceptedReplays}
+            giftDetails={giftDetails}
+            setGiftDetails={setGiftDetails}
+            eventFormatter={eventFormatter}
+          />
       </div>
       <div className="card--gifted-events">
         <h4 className="group-label">Gifted Events:</h4>
@@ -95,6 +111,12 @@ export default function App() {
           setGiftDetails={setGiftDetails}
           eventFormatter={eventFormatter}
         />
+        <Input
+          type={EVENT_CONSTANTS.giftedReplays}
+          giftDetails={giftDetails}
+          setGiftDetails={setGiftDetails}
+          eventFormatter={eventFormatter}
+        />
       </div>
       <div className="card--computed-values">
         <h4 className="group-label">Gift Details:</h4>
@@ -106,6 +128,10 @@ export default function App() {
           <div className="computed-group">
             <span>Total Reserved Transactions</span>
             <span>{eventFormatter.format((giftDetails.reservedTransactions * 1000) + giftDetails.giftedTransactions)}</span>
+          </div>
+          <div className="computed-group">
+            <span>Total Reserved Replays</span>
+            <span>{eventFormatter.format((giftDetails.reservedReplays * 1000) + giftDetails.giftedReplays)}</span>
           </div>
         </div>
         <div className="computed--on-demand computed-group"> 

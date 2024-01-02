@@ -200,4 +200,66 @@ const errorOnDemand = [
   },
 ];
 
-module.exports = { transactionQuotas, transactionOnDemand, errorQuotas, errorOnDemand };
+const replayQuotas = [
+  {
+    bucketId: "r1",
+    minQuota: 0.5,
+    maxQuota: 10,
+    businessCost: 0.003052631579,
+    teamCost: 0.003052631579,
+  },
+  {
+    bucketId: "r2",
+    minQuota: 10,
+    maxQuota: 25,
+    businessCost: 0.002850,
+    teamCost: 0.002850,
+  },
+  {
+    bucketId: "r3",
+    minQuota: 25,
+    maxQuota: 100,
+    businessCost: 0.002850,
+    teamCost: 0.002850,
+  },
+  {
+    bucketId: "r3",
+    minQuota: 100,
+    maxQuota: 1000,
+    businessCost: 0.002565,
+    teamCost: 0.002565,
+  },
+];
+
+const replayOnDemand = [
+  {
+    bucketId: "r1",
+    minQuota: 0.5,
+    maxQuota: 10,
+    businessCost: 0.003968421053,
+    teamCost: 0.003968421053,
+  },
+  {
+    bucketId: "r2",
+    minQuota: 10,
+    maxQuota: 25,
+    businessCost: 0.003705,
+    teamCost: 0.003705,
+  },
+  {
+    bucketId: "r3",
+    minQuota: 25,
+    maxQuota: 100,
+    businessCost: 0.003705,
+    teamCost: 0.003705,
+  },
+  {
+    bucketId: "r3",
+    minQuota: 100,
+    maxQuota: 1000,
+    businessCost: 0.003335,
+    teamCost: 0.003335,
+  },
+]
+
+module.exports = { transactionQuotas, transactionOnDemand, errorQuotas, errorOnDemand, replayQuotas, replayOnDemand };

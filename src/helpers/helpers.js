@@ -1,4 +1,4 @@
-import { transactionQuotas, transactionOnDemand, errorQuotas, errorOnDemand } from "../constants/PLANS";
+import { transactionQuotas, transactionOnDemand, errorQuotas, errorOnDemand, replayQuotas, replayOnDemand } from "../constants/PLANS";
 
 const calcBucket = function(min, max, evaluand, reserved, planCost) {
 
@@ -15,9 +15,9 @@ const calcBucket = function(min, max, evaluand, reserved, planCost) {
 }
 
 export const computeOnDemand = function(giftDetails) {
-    const { reservedErrors, acceptedErrors, giftedErrors, reservedTransactions, acceptedTransactions, giftedTransactions, plan } = giftDetails;
+    const { reservedErrors, acceptedErrors, giftedErrors, reservedTransactions, acceptedTransactions, giftedTransactions, reservedReplays, acceptedReplays, giftedReplays, plan } = giftDetails;
 
-    const onDemand = {transaction: 0, error: 0}
+    const onDemand = {transaction: 0, error: 0, replay: 0}
 
     for (const bucket of errorOnDemand) {
         const { minQuota, maxQuota, businessCost, teamCost } = bucket;
@@ -35,13 +35,21 @@ export const computeOnDemand = function(giftDetails) {
         console.log(onDemand.transaction)
     }
 
-    return onDemand.transaction + onDemand.error;
+    for (const bucket of replayOnDemand) {
+        const { minQuota, maxQuota, businessCost, teamCost } = bucket;
+
+        onDemand.replay += calcBucket(minQuota * 1000, maxQuota * 1000, acceptedReplays - giftedReplays, reservedReplays * 1000, plan === "Business" ? businessCost : teamCost);
+
+        console.log(onDemand.replay)
+    }
+
+    return onDemand.transaction + onDemand.error + onDemand.replay;
 };
 
 export const computeGiftValue = function(giftDetails) {
-    const { reservedErrors, giftedErrors, reservedTransactions, giftedTransactions, plan } = giftDetails;
+    const { reservedErrors, giftedErrors, reservedTransactions, giftedTransactions, reservedReplays, giftedReplays, plan } = giftDetails;
 
-    const giftValue = {transaction: 0, error: 0}
+    const giftValue = {transaction: 0, error: 0, replay: 0}
 
     for (const bucket of errorQuotas) {
         const { minQuota, maxQuota, businessCost, teamCost } = bucket;
@@ -59,6 +67,19 @@ export const computeGiftValue = function(giftDetails) {
         console.log(giftValue.transaction)
     }
 
-    return giftValue.transaction + giftValue.error;
+    for (const bucket of replayQuotas) {
+        const { minQuota, maxQuota, businessCost, teamCost } = bucket;
+        console.log("Reserved Replays", reservedReplays)
+        console.log("Gifted Replays", giftedReplays)
+        // console.log("Accepted Replays", acceptedReplays)
+        console.log("busines cost", businessCost)
+        console.log("team cost", teamCost)
+
+        giftValue.replay += calcBucket(minQuota * 1000, maxQuota * 1000, (reservedReplays * 1000) + giftedReplays, reservedReplays * 1000, plan === "Business" ? businessCost : teamCost);
+
+        console.log(giftValue.replay)
+    }
+
+    return giftValue.transaction + giftValue.error + giftValue.replay;
 };
 
