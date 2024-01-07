@@ -20,10 +20,12 @@ export default function Slider(props) {
         <div className="slider-group">
             <div className="slider-label">
                 <label for={title} className="slider-label">{title}</label>
+                {/* TODO: Change this behaviour for Replays and Attachments */}
                 <label for={title} className="slider-value">{eventFormatter.format(parseInt(giftDetails[key]) * 1000)}</label>
             </div>
             <div className="slider-component">
                 <input type="range" name={title} min={0} max={list.length - 1} step={1} onChange={onChange} value={list.indexOf(giftDetails[key])}/>
+                {/* TODO: change this behaviour for Replays and Attachments */}
                 <div className="slider-key"> 
                     <span>{`${list[0]}K`}</span>
                     <span>{`${list[list.length-1].toString().substring(0,2)}M`}</span>

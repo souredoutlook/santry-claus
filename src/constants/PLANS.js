@@ -223,7 +223,7 @@ const replayQuotas = [
     teamCost: 0.002850,
   },
   {
-    bucketId: "r3",
+    bucketId: "r4",
     minQuota: 100,
     maxQuota: 1000,
     businessCost: 0.002565,
@@ -254,7 +254,7 @@ const replayOnDemand = [
     teamCost: 0.003705,
   },
   {
-    bucketId: "r3",
+    bucketId: "r4",
     minQuota: 100,
     maxQuota: 1000,
     businessCost: 0.003335,
@@ -262,4 +262,52 @@ const replayOnDemand = [
   },
 ]
 
-module.exports = { transactionQuotas, transactionOnDemand, errorQuotas, errorOnDemand, replayQuotas, replayOnDemand };
+const attachmentsQuotas = [
+  {
+    bucketId: "a1",
+    minQuota: 0.001,
+    maxQuota: 0.1,
+    businessCost: 0.24,
+    teamCost: 0.24,
+  },
+  {
+    bucketId: "a2",
+    minQuota: 0.1,
+    maxQuota: 0.2,
+    businessCost: 0.24,
+    teamCost: 0.24,
+  },
+  {
+    bucketId: "a3",
+    minQuota: 0.2,
+    maxQuota: 1,
+    businessCost: 0.23,
+    teamCost: 0.23,
+  },
+];
+
+const attachmentsOnDemand = [
+  {
+    bucketId: "a1",
+    minQuota: 0.001,
+    maxQuota: 0.1,
+    businessCost: 0.312,
+    teamCost: 0.312,
+  },
+  {
+    bucketId: "a2",
+    minQuota: 0.1,
+    maxQuota: 0.2,
+    businessCost: 0.312,
+    teamCost: 0.312,
+  },
+  {
+    bucketId: "a3",
+    minQuota: 0.2,
+    maxQuota: 1,
+    businessCost: 0.299,
+    teamCost: 0.299,
+  },
+]
+
+module.exports = { transactionQuotas, transactionOnDemand, errorQuotas, errorOnDemand, replayQuotas, replayOnDemand, attachmentsQuotas, attachmentsOnDemand };
