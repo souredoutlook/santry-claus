@@ -25,7 +25,6 @@ export default function Slider(props) {
             </div>
             <div className="slider-component">
                 <input type="range" name={title} min={0} max={list.length - 1} step={1} onChange={onChange} value={list.indexOf(giftDetails[key])}/>
-                {/* TODO: change this behaviour for Replays and Attachments */}
                 <div className="slider-key"> 
                     {
                         (key === "reservedErrors" || key === "reservedTransactions") &&
