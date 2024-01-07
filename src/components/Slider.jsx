@@ -27,8 +27,22 @@ export default function Slider(props) {
                 <input type="range" name={title} min={0} max={list.length - 1} step={1} onChange={onChange} value={list.indexOf(giftDetails[key])}/>
                 {/* TODO: change this behaviour for Replays and Attachments */}
                 <div className="slider-key"> 
-                    <span>{`${list[0]}K`}</span>
-                    <span>{`${list[list.length-1].toString().substring(0,2)}M`}</span>
+                    {
+                        (key === "reservedErrors" || key === "reservedTransactions") &&
+                        <span>{`${list[0]}K`}</span>
+                    }
+                    {
+                        (key === "reservedReplays" || key === "reservedAttachments") &&
+                        <span>{`${parseFloat(list[0]) * 1000}`}</span>
+                    }
+                    {
+                        key !== "reservedAttachments" &&
+                        <span>{`${parseFloat(list[list.length - 1]) / 1000}M`}</span>
+                    }
+                    {
+                        key === "reservedAttachments" && 
+                        <span>{`${parseFloat(list[list.length-1]) * 1000}`}</span>
+                    }
                 </div>
             </div>
         </div>

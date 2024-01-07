@@ -55,7 +55,7 @@ export const computeOnDemand = function(giftDetails) {
 };
 
 export const computeGiftValue = function(giftDetails) {
-    const { reservedErrors, giftedErrors, reservedTransactions, giftedTransactions, reservedReplays, giftedReplays, reservedAttachments, acceptedAttachments, giftedAttachments, plan } = giftDetails;
+    const { reservedErrors, giftedErrors, reservedTransactions, giftedTransactions, reservedReplays, giftedReplays, reservedAttachments, giftedAttachments, plan } = giftDetails;
 
     const giftValue = {transaction: 0, error: 0, replay: 0, attachments: 0}
 
