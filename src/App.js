@@ -25,6 +25,7 @@ export default function App() {
   const [giftDetails, setGiftDetails] = useState({
     plan: "Team",
     cycle: "Monthly",
+    iteration: "AM2",
     reservedErrors: 50,
     acceptedErrors: 0,
     reservedTransactions: 100,
@@ -45,6 +46,12 @@ export default function App() {
         <img className="santry-hat" src="santry-claus.svg"/>
       </header>
       <div className="card--org-details">
+      <h4 className="group-label">Plan:</h4>
+        <RadioList
+          type={PLAN_OPTIONS.iteration}
+          giftDetails={giftDetails}
+          setGiftDetails={setGiftDetails}
+        />
         <h4 className="group-label">Plan:</h4>
         <RadioList
           type={PLAN_OPTIONS.plan}

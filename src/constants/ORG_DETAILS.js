@@ -32,6 +32,11 @@ const RESERVED_EVENTS = {
       key: "cycle",
       title: "Billing Period",
       list: ["Monthly", "Annual"],
+    },
+    iteration: {
+      key: "iteration",
+      title: "Iteration",
+      list: ['AM1', 'AM2'],
     }
   }
 
